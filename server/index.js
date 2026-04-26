@@ -12,30 +12,29 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://task-manager-bu2h-ccex26tjh-kanupriyakaushiks-projects.vercel.app",
+      /\.vercel\.app$/
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
 
-
 app.use(express.json());
-
 
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
-
 app.get("/", (req, res) => {
   res.json({ message: "Server running" });
 });
 
-
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
-
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
