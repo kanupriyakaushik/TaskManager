@@ -10,18 +10,18 @@ dotenv.config();
 
 const app = express();
 
-// ✅ Handle preflight requests first
-app.options("*", cors());
+// ✅ Handle preflight requests
+app.options(/.*/, cors());
 
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://task-manager-bu2h.vercel.app",      // ✅ main production URL
-      /\.vercel\.app$/                              // ✅ covers all preview URLs
+      "https://task-manager-bu2h.vercel.app",
+      /\.vercel\.app$/
     ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],  // ✅ added OPTIONS
-    allowedHeaders: ["Content-Type", "Authorization"],      // ✅ added this
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
